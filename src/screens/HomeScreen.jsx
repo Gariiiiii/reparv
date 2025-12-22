@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import HomeHeader from '../components/home/HomeHeader';
 import ActionCards from '../components/home/ActionCards';
+import RentProperty from '../components/home/RentProperty';
+import HomeLoan from '../components/home/HomeLoan';
 
 export default function HomeScreen() {
   return (
@@ -9,7 +11,8 @@ export default function HomeScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeHeader />
         <ActionCards />
-        <View style={{height: 600}} />
+        <RentProperty />
+        <HomeLoan />
       </ScrollView>
     </View>
   );

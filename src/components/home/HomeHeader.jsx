@@ -1,8 +1,8 @@
-import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import BgImage from "../../assets/image/home/bg-image.svg";
+import React from 'react';
+import {View, StyleSheet, Dimensions} from 'react-native';
+import BgImage from '../../assets/image/home/home-background.svg';
 
-const { width } = Dimensions.get("window");
+const {width} = Dimensions.get('window');
 
 export default function HomeHeader() {
   return (
@@ -17,8 +17,8 @@ export default function HomeHeader() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     width: width,
     height: 260,
-  }
+  },
 });

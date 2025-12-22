@@ -5,6 +5,10 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
+import OldPropertyScreen from '../screens/OldPropertyScreen';
+import NewPropertyScreen from '../screens/NewPropertyScreen';
+import RentPropertyScreen from '../screens/RentPropertyScreen';
+import ResalePropertyScreen from '../screens/ResalePropertyScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +20,10 @@ export default function AppNavigator() {
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="OldProperty" component={OldPropertyScreen} />
+        <Stack.Screen name="NewProperty" component={NewPropertyScreen} />
+        <Stack.Screen name="RentProperty" component={RentPropertyScreen} />
+        <Stack.Screen name="ResaleProperty" component={ResalePropertyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
