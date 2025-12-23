@@ -45,7 +45,11 @@ function CustomTabBar({state, navigation}) {
                   source={tab.icon}
                   style={[
                     styles.profileIcon,
-                    {tintColor: focused ? '#6D28D9' : '#B8B8B8'},
+                    {
+                      tintColor: focused ? '#6D28D9' : '#B8B8B8',
+                      width: 16,
+                      height: 16,
+                    },
                   ]}
                 />
               </View>
