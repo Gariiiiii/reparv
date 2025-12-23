@@ -1,0 +1,165 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+
+import UploadIcon from '../../assets/image/rent-oldnew-property/lock.png';
+
+export default function UploadDocForm() {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.heading}>Upload Documents</Text>
+
+      {/* PAN CARD */}
+      <Text style={styles.label}>
+        Pancard <Text style={styles.star}>*</Text>
+      </Text>
+      <TextInput
+        placeholder="Enter pan Number"
+        placeholderTextColor="#868686"
+        style={styles.input}
+        maxLength={10}
+        autoCapitalize="characters"
+      />
+
+      <View style={styles.uploadBox}>
+        <Image source={UploadIcon} style={styles.uploadIcon} />
+
+        <Text style={styles.uploadTitle}>+ Add at least 5 Photos</Text>
+        <Text style={styles.uploadSub}>Drop your Photos here</Text>
+
+        <Text style={styles.uploadInfo}>
+          Upto 50 Photos • Max Size 10MB • Format jpg, png, jpeg
+        </Text>
+
+        <TouchableOpacity style={styles.uploadBtn}>
+          <Text style={styles.uploadBtnText}>Upload PAN Image</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* AADHAAR CARD */}
+      <Text style={styles.label}>
+        Aadhaar Card <Text style={styles.star}>*</Text>
+      </Text>
+      <TextInput
+        placeholder="Enter Aadhaar number"
+        placeholderTextColor="#868686"
+        keyboardType="number-pad"
+        maxLength={12}
+        style={styles.input}
+      />
+
+      <View style={styles.uploadBox}>
+        <Image source={UploadIcon} style={styles.uploadIcon} />
+
+        <Text style={styles.uploadTitle}>+ Add at least 5 Photos</Text>
+        <Text style={styles.uploadSub}>
+          Upload Back and Front Photo of Aadhaar
+        </Text>
+
+        <Text style={styles.uploadInfo}>
+          Upto 50 Photos • Max Size 10MB • Format jpg, png, jpeg
+        </Text>
+
+        <TouchableOpacity style={styles.uploadBtn}>
+          <Text style={styles.uploadBtnText}>Upload Aadhaar Image</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FFFFFF',
+    margin: 16,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#B8B8B8',
+  },
+
+  heading: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 12,
+    color: '#000',
+  },
+
+  label: {
+    fontSize: 16,
+    marginBottom: 4,
+    color: '#000',
+  },
+
+  star: {
+    color: '#E33629',
+  },
+
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    fontSize: 14,
+    color: '#000',
+    marginBottom: 12,
+  },
+
+  uploadBox: {
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
+    borderRadius: 12,
+    backgroundColor: '#FAF7FF',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+  },
+
+  uploadIcon: {
+    width: 40,
+    height: 40,
+    marginBottom: 12,
+    tintColor: '#B8B8B8',
+  },
+
+  uploadTitle: {
+    fontSize: 14,
+    color: '#7C3AED',
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+
+  uploadSub: {
+    fontSize: 12,
+    color: '#868686',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+
+  uploadInfo: {
+    fontSize: 11,
+    color: '#9CA3AF',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
+  uploadBtn: {
+    backgroundColor: '#7C3AED',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  uploadBtnText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+});

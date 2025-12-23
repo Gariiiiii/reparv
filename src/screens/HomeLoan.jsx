@@ -12,8 +12,12 @@ import LoanStepIndicator from '../components/home-loan/LoanStepIndicator';
 import PersonalInfoForm from '../components/home-loan/PersonalInfoForm';
 import JobIcon from '../assets/image/home-loan/job.png';
 import BusinessIcon from '../assets/image/home-loan/business.png';
+import UploadIcon from '../assets/image/rent-oldnew-property/lock.png';
+import ArrowIcon from '../assets/image/onboarding/arrow.svg';
 
 import {Image} from 'react-native';
+import AddressInformationForm from '../components/home-loan/AddressInfoForm';
+import UploadDocumentsForm from '../components/home-loan/UploadDocForm';
 
 const LoanTabs = ({active, onChange}) => {
   return (
@@ -65,6 +69,7 @@ const LoanTabs = ({active, onChange}) => {
 export default function HomeLoan() {
   const navigation = useNavigation();
   const [tab, setTab] = useState('job');
+  const [step, setStep] = useState(1);
 
   return (
     <View style={styles.container}>
@@ -78,12 +83,16 @@ export default function HomeLoan() {
         <View style={{width: 22}} />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <LoanStepIndicator step={1} />
+        <LoanStepIndicator step={step} />
 
         <LoanTabs active={tab} onChange={setTab} />
 
         {tab === 'job' ? (
-          <PersonalInfoForm />
+          <>
+            {step === 1 && <PersonalInfoForm />}
+            {step === 2 && <AddressInformationForm />}
+            {step === 3 && <UploadDocumentsForm />}
+          </>
         ) : (
           <View style={styles.businessBox}>
             <Text style={styles.businessText}>
@@ -91,14 +100,30 @@ export default function HomeLoan() {
             </Text>
           </View>
         )}
-
-        <TouchableOpacity style={styles.cta}>
-          <Text style={styles.ctaText}>Continue to next Step →</Text>
+        <TouchableOpacity
+          style={styles.cta}
+          onPress={() => {
+            if (step < 3) {
+              setStep(step + 1);
+            } else {
+              console.log('All steps completed');
+              // submit API / next screen
+            }
+          }}>
+          <View style={styles.ctaContent}>
+            <Text style={styles.ctaText}>
+              {step < 3 ? 'Continue to next Step' : 'Submit Application'}
+            </Text>
+            <ArrowIcon width={20} height={20} />
+          </View>
         </TouchableOpacity>
 
-        <Text style={styles.footer}>
-          🔒 Your information is secure and encrypted
-        </Text>
+        <View style={styles.footerRow}>
+          <Image source={UploadIcon} style={styles.footerIcon} />
+          <Text style={styles.footerText}>
+            Your information is secure and encrypted
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -126,6 +151,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     margin: 16,
+    marginBottom: 0,
     backgroundColor: '#fff',
     borderRadius: 6,
     overflow: 'hidden',
@@ -158,6 +184,12 @@ const styles = StyleSheet.create({
   activeTabText: {
     color: '#fff',
   },
+  ctaContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+
   cta: {
     height: 52,
     backgroundColor: '#7C3AED',
@@ -172,11 +204,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
-  footer: {
-    textAlign: 'center',
-    fontSize: 12,
-    color: '#6B7280',
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 16,
+    gap: 6,
+  },
+  footerIcon: {
+    width: 16,
+    height: 16,
+    tintColor: '#868686',
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#868686',
   },
   businessBox: {
     backgroundColor: '#fff',
@@ -186,6 +228,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   businessText: {
-    color: '#6B7280',
+    color: '#868686',
   },
 });
