@@ -44,7 +44,8 @@ export default function HomeLoan() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 20,
   },
   card: {
     width: width - 32,

@@ -60,7 +60,7 @@ export default function RentPropertyCards() {
         contentContainerStyle={{paddingHorizontal: 18, marginTop: 14}}
         renderItem={({item}) => (
           <View style={styles.card}>
-            <View style={{height: '55%'}}>
+            <View style={{height: '60%'}}>
               <Image source={item.img} style={styles.image} />
 
               <View style={styles.badge}>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   card: {
     margin: 4,
     width: width * 0.8,
-    height: 275,
+    height: 300,
     backgroundColor: '#fff',
     borderRadius: 12,
     marginRight: 12,

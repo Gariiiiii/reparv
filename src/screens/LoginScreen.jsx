@@ -7,6 +7,7 @@ import {
   TextInput,
   FlatList,
   Dimensions,
+  Modal,
 } from 'react-native';
 
 import Bg1 from '../assets/image/login/login1.svg';
@@ -51,6 +52,7 @@ export default function LoginScreen() {
   const [otpVisible, setOtpVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+  const [bottomVisible, setBottomVisible] = useState(true);
 
   const navigation = useNavigation();
 
@@ -118,108 +120,121 @@ export default function LoginScreen() {
         />
       </View>
 
-      <View style={styles.bottomCardWrapper}>
-        <Hyperbola
-          width={width}
-          height={height * 0.75}
-          style={{position: 'absolute', top: 0}}
-          preserveAspectRatio="xMidYMid slice"
-        />
-
-        <View style={styles.bottomCardContent}>
-          <Logo width={84} height={35} />
-
-          <Text style={styles.mainTitle}>
-            Your <Text style={{color: '#000'}}>All In One</Text> property
-            Solution
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '85%',
-              marginVertical: 12,
-            }}>
-            <LinearGradient
-              colors={['#FFFFFF', '#5E23DC']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={{flex: 1, height: 1}}
+      <Modal visible={bottomVisible} animationType="slide" transparent>
+        <View style={styles.modalOverlay}>
+          <View style={styles.bottomCardWrapper}>
+            <Hyperbola
+              width={width}
+              height={height * 0.75}
+              style={{position: 'absolute', top: 0}}
+              preserveAspectRatio="xMidYMid slice"
             />
 
-            <Text style={[styles.loginText, {marginHorizontal: 10}]}>
-              Login or SignUp
-            </Text>
+            <View style={styles.bottomCardContent}>
+              <Logo width={84} height={35} />
 
-            <LinearGradient
-              colors={['#5E23DC', '#FFFFFF']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={{flex: 1, height: 1}}
-            />
-          </View>
-
-          <View style={styles.phoneWrapper}>
-            <Text style={styles.label}>Phone Number</Text>
-            <View style={styles.phoneRow}>
-              {/* <Text style={styles.country}>+91</Text> */}
+              <Text style={styles.mainTitle}>
+                Your <Text style={{color: '#000'}}>All In One</Text> property
+                Solution
+              </Text>
               <View
-                style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-                <Text style={styles.country}>+91</Text>
-                <DropdownIcon width={24} height={24} style={{marginLeft: 6}} />
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '85%',
+                  marginVertical: 12,
+                }}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#5E23DC']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  style={{flex: 1, height: 1}}
+                />
+
+                <Text style={[styles.loginText, {marginHorizontal: 10}]}>
+                  Login or SignUp
+                </Text>
+
+                <LinearGradient
+                  colors={['#5E23DC', '#FFFFFF']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  style={{flex: 1, height: 1}}
+                />
               </View>
 
-              <TextInput
-                style={[styles.input, {fontSize: 20}]}
-                placeholder="Phone Number"
-                placeholderTextColor="#868686"
-                keyboardType="number-pad"
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
+              <View style={styles.phoneWrapper}>
+                <Text style={styles.label}>Phone Number</Text>
+                <View style={styles.phoneRow}>
+                  {/* <Text style={styles.country}>+91</Text> */}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 6,
+                    }}>
+                    <Text style={styles.country}>+91</Text>
+                    <DropdownIcon
+                      width={24}
+                      height={24}
+                      style={{marginLeft: 6}}
+                    />
+                  </View>
+
+                  <TextInput
+                    style={[styles.input, {fontSize: 20}]}
+                    placeholder="Phone Number"
+                    placeholderTextColor="#868686"
+                    keyboardType="number-pad"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                  />
+                </View>
+              </View>
+
+              {error ? (
+                <Text style={{color: 'red', fontSize: 8, marginTop: 3}}>
+                  {error}
+                </Text>
+              ) : null}
+
+              <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+                <Text style={styles.loginBtnText}>Login</Text>
+              </TouchableOpacity>
+
+              <OtpModal
+                visible={otpVisible}
+                onClose={() => setOtpVisible(false)}
+                phone={phoneNumber}
+                onEdit={() => setOtpVisible(false)}
+                onVerify={() => {
+                  setBottomVisible(false);
+                  setOtpVisible(false);
+                  navigation.navigate('MainTabs');
+                }}
               />
-            </View>
-          </View>
 
-          {error ? (
-            <Text style={{color: 'red', fontSize: 8, marginTop: 3}}>
-              {error}
-            </Text>
-          ) : null}
+              <Text style={styles.terms}>
+                By Clicking above you agree to{' '}
+                <Text style={styles.link}>Terms & Conditions</Text>
+              </Text>
 
-          <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-            <Text style={styles.loginBtnText}>Login</Text>
-          </TouchableOpacity>
+              <Text style={styles.or}>Or login with</Text>
 
-          <OtpModal
-            visible={otpVisible}
-            onClose={() => setOtpVisible(false)}
-            phone={phoneNumber}
-            onEdit={() => setOtpVisible(false)}
-            onVerify={() => {
-              setOtpVisible(false);
-              navigation.navigate('Home');
-            }}
-          />
-
-          <Text style={styles.terms}>
-            By Clicking above you agree to{' '}
-            <Text style={styles.link}>Terms & Conditions</Text>
-          </Text>
-
-          <Text style={styles.or}>Or login with</Text>
-
-          <View style={styles.socialRow}>
-            <View style={styles.socialIconWrapper}>
-              <Google width={24} height={24} />
-            </View>
-            <View style={styles.socialIconWrapper}>
-              <Whatsapp width={24} height={24} />
+              <View style={styles.socialRow}>
+                <View style={styles.socialIconWrapper}>
+                  <Google width={24} height={24} />
+                </View>
+                <View style={styles.socialIconWrapper}>
+                  <Whatsapp width={24} height={24} />
+                </View>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </Modal>
     </View>
   );
 }
@@ -265,8 +280,14 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   activeDot: {backgroundColor: '#6F00FF', width: 59},
-
-  bottomCardWrapper: {flex: 1},
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'transparent',
+  },
+  bottomCardWrapper: {
+    height: height * 0.58,
+  },
   bottomCardContent: {flex: 1, paddingTop: 20, alignItems: 'center', gap: 4},
   mainTitle: {
     fontSize: 24,

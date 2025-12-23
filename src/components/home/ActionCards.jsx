@@ -5,13 +5,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import SellIcon from '../../assets/image/home/actioncard/sell-old-property.svg';
-import BuyIcon from '../../assets/image/home/actioncard/buy-new-property.svg';
-import RentIcon from '../../assets/image/home/actioncard/rent-property.svg';
-import ResaleIcon from '../../assets/image/home/actioncard/resale-property.svg';
+// import SellIcon from '../../assets/image/home/actioncard/sell-old-property.svg';
+// import BuyIcon from '../../assets/image/home/actioncard/buy-new-property.svg';
+// import RentIcon from '../../assets/image/home/actioncard/rent-property.svg';
+// import ResaleIcon from '../../assets/image/home/actioncard/resale-property.svg';
+// import ArrowIcon from '../../assets/image/home/actioncard/arrow.svg';
+
+import SellIcon from '../../assets/image/home/actioncard/old-property.png';
+import BuyIcon from '../../assets/image/home/actioncard/new-property.png';
+import RentIcon from '../../assets/image/home/actioncard/rent-property.png';
+import ResaleIcon from '../../assets/image/home/actioncard/resale-property.png';
 import ArrowIcon from '../../assets/image/home/actioncard/arrow.svg';
 
 const {width} = Dimensions.get('window');
@@ -22,22 +29,22 @@ export default function ActionCards() {
   const cardData = [
     {
       title: 'Sell Old Property',
-      icon: <SellIcon width={146} height={120} />,
+      icon: SellIcon,
       screen: 'OldProperty',
     },
     {
       title: 'Buy New Property',
-      icon: <BuyIcon width={142} height={112} />,
+      icon: BuyIcon,
       screen: 'NewProperty',
     },
     {
       title: 'Rent Property',
-      icon: <RentIcon width={146} height={115} />,
-      screen: 'RentProperty',
+      icon: RentIcon,
+      screen: 'RentOldNewProperty',
     },
     {
       title: 'Buy Resale Property',
-      icon: <ResaleIcon width={147} height={104} />,
+      icon: ResaleIcon,
       screen: 'ResaleProperty',
     },
   ];
@@ -76,7 +83,13 @@ export default function ActionCards() {
           </View>
 
           <View style={styles.row2}>
-            <View style={styles.iconWrapper}>{item.icon}</View>
+            <View style={styles.iconWrapper}>
+              <Image
+                source={item.icon}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </View>
             <View style={styles.verticalLine}></View>
           </View>
         </TouchableOpacity>
@@ -140,12 +153,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  icon: {
+    width: 140,
+    height: 120,
+  },
 
   verticalLine: {
     position: 'absolute',
     right: 0,
     top: '50%',
-    transform: [{translateY: -16}], 
+    transform: [{translateY: -16}],
 
     width: 8,
     height: 33,
