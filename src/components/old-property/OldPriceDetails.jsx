@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
-export default function PriceDetails({sellingPrice, onChangeSelling, error}) {
+export default function OldPriceDetails({sellingPrice, onChangeSelling, error}) {
   return (
     <View style={styles.wrapper}>
       {/* Header */}

@@ -33,7 +33,11 @@ export default function RentOldNewPropertyScreen() {
     if (!area) newErrors.area = 'Property area is required';
     if (!sellingPrice) newErrors.sellingPrice = 'Selling price is required';
     if (!ownerName) newErrors.ownerName = 'Owner name is required';
-    if (!phone) newErrors.phone = 'Phone number is required';
+    if (!phone) {
+      newErrors.phone = 'Phone number is required';
+    } else if (phone.length !== 10) {
+      newErrors.phone = 'Phone number must be 10 digits';
+    }
 
     setErrors(newErrors);
 
@@ -48,6 +52,7 @@ export default function RentOldNewPropertyScreen() {
       console.log('Submit pressed');
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -66,10 +71,47 @@ export default function RentOldNewPropertyScreen() {
         contentContainerStyle={styles.scrollContent}>
         {!showUpload && (
           <>
-            <PropertyType value={propertyType} onChange={setPropertyType} />
-            <PropertyArea />
-            <PriceDetails />
-            <ContactDetails />
+            <PropertyType
+              value={propertyType}
+              // onChange={setPropertyType}
+              onChange={val => {
+                setPropertyType(val);
+                setErrors(prev => ({...prev, propertyType: null}));
+              }}
+              error={errors.propertyType}
+            />
+            <PropertyArea
+              value={area}
+              onChange={text => {
+                setArea(text);
+                setErrors(prev => ({...prev, area: null}));
+              }}
+              error={errors.area}
+            />
+            <PriceDetails
+              sellingPrice={sellingPrice}
+              onChangeSelling={text => {
+                setSellingPrice(text);
+                setErrors(prev => ({...prev, sellingPrice: null}));
+              }}
+              error={errors.sellingPrice}
+            />
+            <ContactDetails
+              ownerName={ownerName}
+              phone={phone}
+              onOwnerChange={text => {
+                setOwnerName(text);
+                setErrors(prev => ({...prev, ownerName: null}));
+              }}
+              onPhoneChange={text => {
+                setPhone(text);
+                setErrors(prev => ({...prev, phone: null}));
+              }}
+              errors={{
+                ownerName: errors.ownerName,
+                phone: errors.phone,
+              }}
+            />
 
             <TouchableOpacity
               activeOpacity={0.9}

@@ -11,7 +11,7 @@ import {
 import AreaIcon from '../../assets/image/rent-oldnew-property/property-area.png';
 import Dropdown from '../../assets/image/rent-oldnew-property/dropdown.png';
 
-export default function PropertyArea({value, onChange, error}) {
+export default function OldPropertyArea({value, onChange, error}) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.headingRow}>

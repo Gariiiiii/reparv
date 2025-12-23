@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -11,6 +12,8 @@ import {
 const {width} = Dimensions.get('window');
 
 export default function HomeLoan() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -26,7 +29,7 @@ export default function HomeLoan() {
               Home Loans That Fit Your Life, Seamlessly.
             </Text>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeLoan')}>
               <Text style={styles.buttonText}>Start Your Loan Application</Text>
             </TouchableOpacity>
           </View>

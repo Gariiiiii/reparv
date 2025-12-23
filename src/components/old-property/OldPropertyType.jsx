@@ -44,7 +44,7 @@ const PROPERTY_TYPES = [
   {id: 'shop', label: 'Shop', icon: ShopIcon},
 ];
 
-export default function PropertyTypeSelector({value, onChange, error}) {
+export default function OldPropertyType({value, onChange, error}) {
   const renderItem = ({item}) => {
     const selected = value === item.id;
 

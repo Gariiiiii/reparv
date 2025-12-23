@@ -11,7 +11,7 @@ import {
 import User from '../../assets/image/rent-oldnew-property/profile.png';
 import Lock from '../../assets/image/rent-oldnew-property/lock.png';
 
-export default function ContactDetails({
+export default function OldContactDetails({
   ownerName,
   phone,
   onOwnerChange,

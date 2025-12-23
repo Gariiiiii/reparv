@@ -10,7 +10,7 @@ import {
 
 import UploadIcon from '../../assets/image/rent-oldnew-property/lock.png';
 
-export default function UploadImg() {
+export default function OldUploadImg() {
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
 
