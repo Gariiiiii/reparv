@@ -18,6 +18,7 @@ import ArrowIcon from '../assets/image/onboarding/arrow.svg';
 import {Image} from 'react-native';
 import AddressInformationForm from '../components/home-loan/AddressInfoForm';
 import UploadDocumentsForm from '../components/home-loan/UploadDocForm';
+import UploadDocForm from '../components/home-loan/UploadDocForm';
 
 const LoanTabs = ({active, onChange}) => {
   return (
@@ -71,6 +72,55 @@ export default function HomeLoan() {
   const [tab, setTab] = useState('job');
   const [step, setStep] = useState(1);
 
+  const [personal, setPersonal] = useState({
+    name: '',
+    dob: '',
+    phone: '',
+    email: '',
+  });
+
+  const [address, setAddress] = useState({
+    state: '',
+    city: '',
+    pincode: '',
+  });
+
+  const [docs, setDocs] = useState({
+    pan: '',
+    aadhaar: '',
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleContinue = () => {
+    let e = {};
+
+    if (step === 1) {
+      if (!personal.name) e.name = 'Full name is required';
+      if (!personal.dob) e.dob = 'DOB is required';
+      if (personal.phone.length !== 10) e.phone = 'Enter valid mobile number';
+      if (!/\S+@\S+\.\S+/.test(personal.email)) e.email = 'Enter valid email';
+    }
+
+    if (step === 2) {
+      if (!address.state) e.state = 'State is required';
+      if (!address.city) e.city = 'City is required';
+      if (address.pincode.length !== 6) e.pincode = 'Enter valid pincode';
+    }
+
+    if (step === 3) {
+      if (docs.pan.length !== 10) e.pan = 'Invalid PAN number';
+      if (docs.aadhaar.length !== 12) e.aadhaar = 'Invalid Aadhaar number';
+    }
+
+    setErrors(e);
+
+    if (Object.keys(e).length === 0) {
+      if (step < 3) setStep(step + 1);
+      else console.log('FINAL SUBMIT', {personal, address, docs});
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -89,9 +139,28 @@ export default function HomeLoan() {
 
         {tab === 'job' ? (
           <>
-            {step === 1 && <PersonalInfoForm />}
+            {/* {step === 1 && <PersonalInfoForm />}
             {step === 2 && <AddressInformationForm />}
-            {step === 3 && <UploadDocumentsForm />}
+            {step === 3 && <UploadDocumentsForm />} */}
+            {step === 1 && (
+              <PersonalInfoForm
+                data={personal}
+                setData={setPersonal}
+                errors={errors}
+              />
+            )}
+
+            {step === 2 && (
+              <AddressInformationForm
+                data={address}
+                setData={setAddress}
+                errors={errors}
+              />
+            )}
+
+            {step === 3 && (
+              <UploadDocForm data={docs} setData={setDocs} errors={errors} />
+            )}
           </>
         ) : (
           <View style={styles.businessBox}>
@@ -100,23 +169,17 @@ export default function HomeLoan() {
             </Text>
           </View>
         )}
-        <TouchableOpacity
-          style={styles.cta}
-          onPress={() => {
-            if (step < 3) {
-              setStep(step + 1);
-            } else {
-              console.log('All steps completed');
-              // submit API / next screen
-            }
-          }}>
-          <View style={styles.ctaContent}>
-            <Text style={styles.ctaText}>
-              {step < 3 ? 'Continue to next Step' : 'Submit Application'}
-            </Text>
-            <ArrowIcon width={20} height={20} />
-          </View>
-        </TouchableOpacity>
+
+        {tab === 'job' && (
+          <TouchableOpacity style={styles.cta} onPress={handleContinue}>
+            <View style={styles.ctaContent}>
+              <Text style={styles.ctaText}>
+                {step < 3 ? 'Continue to next Step' : 'Submit Application'}
+              </Text>
+              <ArrowIcon width={20} height={20} />
+            </View>
+          </TouchableOpacity>
+        )}
 
         <View style={styles.footerRow}>
           <Image source={UploadIcon} style={styles.footerIcon} />
@@ -189,7 +252,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-
+  error: {
+    color: '#E33629',
+    fontSize: 12,
+    marginBottom: 8,
+  },
   cta: {
     height: 52,
     backgroundColor: '#7C3AED',
@@ -226,6 +293,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     alignItems: 'center',
+    height: 455,
   },
   businessText: {
     color: '#868686',

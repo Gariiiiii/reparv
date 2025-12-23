@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
+import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
 import ProfileIcon from '../../assets/image/bottom-navigator/profile.png';
 
-export default function PersonalInfoForm() {
+export default function PersonalInfoForm({data, setData, errors}) {
   return (
     <View style={styles.card}>
       <Text style={styles.heading}>Personal Information</Text>
@@ -16,9 +16,12 @@ export default function PersonalInfoForm() {
           placeholder="Enter Your full name"
           placeholderTextColor="#868686"
           style={styles.inputFlex}
+          value={data.name}
+          onChangeText={v => setData({...data, name: v})}
         />
         <Image source={ProfileIcon} style={styles.profileIcon} />
       </View>
+      {errors.name && <Text style={styles.error}>{errors.name}</Text>}
 
       <Text style={styles.label}>
         Date of Birth <Text style={styles.star}>*</Text>
@@ -27,7 +30,10 @@ export default function PersonalInfoForm() {
         placeholder="dd/mm/yy"
         placeholderTextColor="#868686"
         style={styles.input}
+        value={data.dob}
+        onChangeText={v => setData({...data, dob: v})}
       />
+      {errors.dob && <Text style={styles.error}>{errors.dob}</Text>}
 
       <Text style={styles.label}>
         Mobile Number <Text style={styles.star}>*</Text>
@@ -42,12 +48,13 @@ export default function PersonalInfoForm() {
           keyboardType="number-pad"
           maxLength={10}
           style={styles.phoneInput}
+          value={data.phone}
+          onChangeText={v => setData({...data, phone: v})}
         />
       </View>
+      {errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
 
-      <Text style={styles.helper}>
-        we'll send an OTP to verify this Number
-      </Text>
+      <Text style={styles.helper}>we'll send an OTP to verify this Number</Text>
 
       <Text style={styles.label}>
         Email Address <Text style={styles.star}>*</Text>
@@ -56,7 +63,10 @@ export default function PersonalInfoForm() {
         placeholder="Enter Your email address"
         placeholderTextColor="#868686"
         style={styles.input}
+        value={data.email}
+        onChangeText={v => setData({...data, email: v})}
       />
+      {errors.email && <Text style={styles.error}>{errors.email}</Text>}
     </View>
   );
 }
@@ -81,6 +91,11 @@ const styles = StyleSheet.create({
   },
   star: {
     color: '#E33629',
+  },
+  error: {
+    color: '#E33629',
+    fontSize: 12,
+    marginBottom: 8,
   },
   inputWithIcon: {
     flexDirection: 'row',

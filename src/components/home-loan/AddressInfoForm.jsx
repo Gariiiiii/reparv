@@ -48,9 +48,8 @@ const CITY_DATA = {
   ],
 };
 
-export default function AddressInformationForm() {
+export default function AddressInfoForm({data, setData, errors}) {
   const [state, setState] = useState(null);
-  const [city, setCity] = useState(null);
 
   return (
     <View style={styles.card}>
@@ -70,31 +69,35 @@ export default function AddressInformationForm() {
         labelField="label"
         valueField="value"
         placeholder="Select Your State"
-        value={state}
-        onChange={item => {
-          setState(item.value);
-          setCity(null);
-        }}
+        // value={state}
+        // onChange={item => {
+        //   setState(item.value);
+        //   setCity(null);
+        // }}
+        value={data.state}
+        onChange={item => setData({...data, state: item.value, city: ''})}
       />
+      {errors.state && <Text style={styles.error}>{errors.state}</Text>}
 
       <Text style={styles.label}>
         City <Text style={styles.star}>*</Text>
       </Text>
       <Dropdown
-        style={[styles.dropdown, !state && styles.disabledDropdown]}
+        style={styles.dropdown}
         containerStyle={styles.dropdownContainer}
-        itemContainerStyle={styles.itemContainer}
         itemTextStyle={styles.itemText}
         placeholderStyle={styles.placeholder}
         selectedTextStyle={styles.selectedText}
-        data={state ? CITY_DATA[state] : []}
+        data={data.state ? CITY_DATA[data.state] : []}
         labelField="label"
         valueField="value"
-        placeholder={state ? 'Select City' : 'Select State first'}
-        value={city}
-        disable={!state}
-        onChange={item => setCity(item.value)}
+        placeholder={data.state ? 'Select City' : 'Select State first'}
+        value={data.city}
+        disable={!data.state}
+        onChange={item => setData({...data, city: item.value})}
       />
+
+      {errors.city && <Text style={styles.error}>{errors.city}</Text>}
 
       <Text style={styles.label}>
         Pincode <Text style={styles.star}>*</Text>
@@ -105,7 +108,10 @@ export default function AddressInformationForm() {
         keyboardType="number-pad"
         maxLength={6}
         style={styles.input}
+        value={data.pincode}
+        onChangeText={v => setData({...data, pincode: v})}
       />
+      {errors.pincode && <Text style={styles.error}>{errors.pincode}</Text>}
     </View>
   );
 }
@@ -131,6 +137,11 @@ const styles = StyleSheet.create({
   star: {
     color: '#E33629',
   },
+  error: {
+    color: '#E33629',
+    fontSize: 12,
+    marginBottom: 8,
+  },
   dropdown: {
     height: 48,
     borderColor: '#D9D9D9',
@@ -144,10 +155,10 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     maxHeight: 200,
-    paddingVertical: 0, 
+    paddingVertical: 0,
   },
   itemContainer: {
-    paddingVertical: 0, 
+    paddingVertical: 0,
     paddingHorizontal: 0,
   },
   itemText: {

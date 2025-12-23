@@ -10,7 +10,7 @@ import {
 
 import UploadIcon from '../../assets/image/rent-oldnew-property/lock.png';
 
-export default function UploadDocForm() {
+export default function UploadDocForm({data, setData, errors}) {
   return (
     <View style={styles.card}>
       <Text style={styles.heading}>Upload Documents</Text>
@@ -25,7 +25,10 @@ export default function UploadDocForm() {
         style={styles.input}
         maxLength={10}
         autoCapitalize="characters"
+        value={data.pan}
+        onChangeText={v => setData({...data, pan: v})}
       />
+      {errors.pan && <Text style={styles.error}>{errors.pan}</Text>}
 
       <View style={styles.uploadBox}>
         <Image source={UploadIcon} style={styles.uploadIcon} />
@@ -52,7 +55,10 @@ export default function UploadDocForm() {
         keyboardType="number-pad"
         maxLength={12}
         style={styles.input}
+        value={data.aadhaar}
+        onChangeText={v => setData({...data, aadhaar: v})}
       />
+      {errors.aadhaar && <Text style={styles.error}>{errors.aadhaar}</Text>}
 
       <View style={styles.uploadBox}>
         <Image source={UploadIcon} style={styles.uploadIcon} />
@@ -90,7 +96,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     color: '#000',
   },
-
+error: {
+    color: '#E33629',
+    fontSize: 12,
+    marginBottom: 8,
+  },
   label: {
     fontSize: 16,
     marginBottom: 4,
