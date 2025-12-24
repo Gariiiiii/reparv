@@ -1,7 +1,12 @@
 import React from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, Text} from 'react-native';
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.style = {
+  fontFamily: 'SegoeUI-Regular',
+};
 
 export default function App() {
   return (
@@ -18,11 +23,5 @@ export default function App() {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
   },
 });

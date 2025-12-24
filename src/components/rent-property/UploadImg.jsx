@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     marginBottom: 12,
     fontFamily: 'Segoe UI',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 
   plus: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
 
   subText: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   uploadBtnText: {
     color: '#fff',
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
   optional: {
     fontSize: 14,

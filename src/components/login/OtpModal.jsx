@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-start',
   },
-  backText: {fontSize: 16, fontWeight: '700', marginLeft: 8},
-  titleCenter: {fontSize: 24, fontWeight: '700', marginTop: 8},
+  backText: {fontSize: 16, fontFamily : "SegoeUI-Bold", marginLeft: 8},
+  titleCenter: {fontSize: 24, fontFamily : "SegoeUI-Bold", marginTop: 8},
   subtitleRow: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -158,11 +158,11 @@ const styles = StyleSheet.create({
   },
   edit: {
     color: '#5E23DC',
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     marginTop: 18,
     marginBottom: 8,
     textAlign: 'center',
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   verifyBtnText: {
     color: '#fff',
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     textAlign: 'center',
     fontSize: 16,
   },

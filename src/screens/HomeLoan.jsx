@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
   },
   tabContainer: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
 
   tabText: {
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 16,
     color: '#000',
   },
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   ctaText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
   footerRow: {
     flexDirection: 'row',

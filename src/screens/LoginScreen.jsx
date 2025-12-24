@@ -184,6 +184,7 @@ export default function LoginScreen() {
                   <TextInput
                     style={[styles.input, {fontSize: 20}]}
                     placeholder="Phone Number"
+                    maxLength={10}
                     placeholderTextColor="#868686"
                     keyboardType="number-pad"
                     onFocus={() => setIsFocused(true)}
@@ -254,14 +255,14 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     width: '80%',
     lineHeight: 36,
   },
   smallText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     marginTop: 6,
     width: '90%',
     lineHeight: 36,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
   bottomCardContent: {flex: 1, paddingTop: 20, alignItems: 'center', gap: 4},
   mainTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     textAlign: 'center',
     lineHeight: 36,
     color: '#5E23DC',
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     textAlign: 'center',
   },
   phoneWrapper: {
@@ -329,11 +330,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
 
   terms: {fontSize: 8, marginTop: 8, color: '#868686'},
-  link: {color: '#6a1bff', fontWeight: '700'},
+  link: {color: '#6a1bff', fontFamily : "SegoeUI-Bold"},
   or: {fontSize: 8, marginTop: 8, color: '#868686'},
   socialRow: {
     flexDirection: 'row',

@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   title: {
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 16,
     lineHeight: 16,
     color: '#3F2D62',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   badgeText: {
     color: '#fff',
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
   },
   bottom: {
     height: '40%',
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 13,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     marginTop: 4,
   },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     marginTop: 2,
     fontFamily: 'Segoe UI',
   },

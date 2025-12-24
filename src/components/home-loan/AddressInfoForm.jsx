@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     marginBottom: 12,
   },
   label: {

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
   },
   scrollContent: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
   footerText: {
     textAlign: 'center',

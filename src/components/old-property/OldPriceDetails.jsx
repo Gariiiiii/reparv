@@ -58,14 +58,14 @@ const styles = StyleSheet.create({
 
   currencyIcon: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#8A38F5',
     marginRight: 8,
   },
 
   heading: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     fontFamily: 'Segoe UI',
   },

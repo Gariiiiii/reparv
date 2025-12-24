@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
   activeText: {
     fontSize: 24,
-    fontWeight: '700',
+    fontWfontFamily : "SegoeUI-Bold",
     color: '#fff',
   },
 
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
   activeLabel: {
     color: '#8A38F5',
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
 
   lineBg: {

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     marginBottom: 12,
     fontFamily: 'Segoe UI',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   labelActive: {
     color: '#fff',
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
   },
   error: {
     color: '#E33629',

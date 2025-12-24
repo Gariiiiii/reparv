@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#3F2D62',
   },
   arrowCircle: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     color: '#fff',
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 12,
   },
   ctaBtn: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   ctaText: {
     color: '#FFF',
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 12,
   },
 });

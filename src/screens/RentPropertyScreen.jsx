@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
   },
   wrapper: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#3F2D62',
     lineHeight: 22,
     flex: 1,
@@ -253,12 +253,12 @@ const styles = StyleSheet.create({
   },
   pgTagText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#3F2D62',
   },
   bottomTitle: {
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#FFFFFF',
   },
   bottomSub: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
   bottomBtnText: {
     color: '#FFF',
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 13,
     marginRight: 6,
   },

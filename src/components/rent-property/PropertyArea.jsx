@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     fontFamily: 'Segoe UI',
   },
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   infoText: {
     color: '#fff',
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
   },
   helperText: {
     fontSize: 12,

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
   },
   wrapper: {
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     color: '#3F2D62',
     lineHeight: 22,
     flex: 1,

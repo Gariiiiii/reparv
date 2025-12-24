@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
   heading: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeigfontFamily : "SegoeUI-Bold",
     marginBottom: 12,
     color: '#000',
   },
@@ -143,7 +143,7 @@ error: {
   uploadTitle: {
     fontSize: 14,
     color: '#7C3AED',
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     marginBottom: 6,
   },
 
@@ -170,6 +170,6 @@ error: {
   uploadBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
   },
 });

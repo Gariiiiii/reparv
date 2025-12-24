@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily : "SegoeUI-Bold",
     color: "#1E293B",
   },
 });

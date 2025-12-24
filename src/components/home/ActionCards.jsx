@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily : "SegoeUI-Bold",
     color: '#3F2D62',
     flex: 1,
     lineHeight: 20,

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     color: '#000',
     lineHeight: 24,
     marginBottom: 8,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontWeight: '600',
+    fontFamily : "SegoeUI-Bold",
     fontSize: 12,
   },
   rightImage: {

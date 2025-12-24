@@ -133,7 +133,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  skipText: {color: '#fff', fontSize: 16, fontWeight: '700'},
+  skipText: {
+    color: '#fff', fontSize: 16,
+    fontFamily : "SegoeUI-Bold"
+    // fontWeight: '700'
+  },
   bottomContainer: {
     position: 'absolute',
     bottom: 40,
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily : "SegoeUI-Bold",
     width: '80%',
     marginBottom: 20,
     lineHeight: 42,
@@ -168,5 +172,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  nextText: {color: '#fff', fontSize: 16, fontWeight: '700'},
+  nextText: {color: '#fff', fontSize: 16, fontFamily : "SegoeUI-Bold"},
 });
