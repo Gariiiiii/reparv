@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import UploadIcon from '../../assets/image/rent-oldnew-property/lock.png';
+import UploadIcon from '../../assets/image/rent-oldnew-property/img-upload.png';
 
 export default function UploadImg() {
   const [description, setDescription] = useState('');
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     width: 42,
     height: 32,
     marginBottom: 12,
-    tintColor: '#8A38F5',
+    // tintColor: '#8A38F5',
   },
 
   addText: {

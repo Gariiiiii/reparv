@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import UploadIcon from '../../assets/image/rent-oldnew-property/lock.png';
+import UploadIcon from '../../assets/image/rent-oldnew-property/img-upload.png';
 
 export default function OldUploadImg() {
   const [description, setDescription] = useState('');
