@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: (width - 18 * 3) / 2,
+    aspectRatio: 1,
     borderRadius: 16,
     marginBottom: 16,
     boxShadow: '0px 4px 6px rgba(0,0,0,0.08)',

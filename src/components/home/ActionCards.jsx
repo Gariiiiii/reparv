@@ -9,12 +9,6 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-// import SellIcon from '../../assets/image/home/actioncard/sell-old-property.svg';
-// import BuyIcon from '../../assets/image/home/actioncard/buy-new-property.svg';
-// import RentIcon from '../../assets/image/home/actioncard/rent-property.svg';
-// import ResaleIcon from '../../assets/image/home/actioncard/resale-property.svg';
-// import ArrowIcon from '../../assets/image/home/actioncard/arrow.svg';
-
 import SellIcon from '../../assets/image/home/actioncard/old-property.png';
 import BuyIcon from '../../assets/image/home/actioncard/new-property.png';
 import RentIcon from '../../assets/image/home/actioncard/rent-property.png';
@@ -71,7 +65,7 @@ export default function ActionCards() {
           onPress={() => navigation.navigate(item.screen)}>
           <View style={styles.row1}>
             <View style={{flex: 1}}>
-              <Text style={styles.cardTitle}> {formatTitle(item.title)}</Text>
+              <Text style={styles.cardTitle}>{formatTitle(item.title)}</Text>
               {item.title === 'Rent Property' && (
                 <Text style={styles.subtitle}>(New / Old)</Text>
               )}
@@ -108,12 +102,14 @@ const styles = StyleSheet.create({
     marginTop: -35,
   },
   card: {
-    width: (width - 18 * 3) / 2,
+    // width: (width - 18 * 3) / 2,
+    // aspectRatio: 1,
+    width: 180,
     borderRadius: 16,
     backgroundColor: '#FFFFFF',
     marginBottom: 16,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-    paddingVertical: 12,
+    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.14)',
+    paddingVertical: 8,
   },
   row1: {
     flexDirection: 'row',
@@ -157,18 +153,14 @@ const styles = StyleSheet.create({
     width: 140,
     height: 120,
   },
-
   verticalLine: {
     position: 'absolute',
     right: 0,
     top: '50%',
-    transform: [{translateY: -16}],
-
+    transform: [{translateY: -40}],
     width: 8,
     height: 33,
-
     backgroundColor: '#5E23DC',
-
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
   },

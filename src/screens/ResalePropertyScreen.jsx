@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: (width - 18 * 3) / 2,
+    aspectRatio: 1,
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     marginBottom: 16,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: '50%',
-    transform: [{translateY: -18}],
+    transform: [{translateY: -24}],
     width: 8,
     height: 36,
     backgroundColor: '#5E23DC',

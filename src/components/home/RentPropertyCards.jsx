@@ -147,7 +147,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     marginRight: 12,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.06)',
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   bottom: {
-    height: '50%',
+    height: '40%',
     paddingHorizontal: 12,
     paddingVertical: 8,
   },

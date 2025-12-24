@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 18,
     paddingVertical: 16,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
+    boxShadow: '0px 2px 15px rgba(0, 0, 0, 0.21)',
     marginTop: 10,
     alignItems: 'center',
     fontFamily: 'Segoe UI',

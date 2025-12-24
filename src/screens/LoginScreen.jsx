@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   bottomCardWrapper: {
-    height: height * 0.58,
+    height: height * 0.55,
   },
   bottomCardContent: {flex: 1, paddingTop: 20, alignItems: 'center', gap: 4},
   mainTitle: {
