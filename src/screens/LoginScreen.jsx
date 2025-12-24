@@ -8,6 +8,7 @@ import {
   FlatList,
   Dimensions,
   Modal,
+  StatusBar,
 } from 'react-native';
 
 import Bg1 from '../assets/image/login/login1.svg';
@@ -21,6 +22,7 @@ import DropdownIcon from '../assets/image/login/dropdown.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import OtpModal from '../components/login/OtpModal';
 import {useNavigation} from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const {width, height} = Dimensions.get('window');
 
@@ -83,7 +85,12 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+              backgroundColor="#FAF8FF"
+              barStyle="dark-content"
+              translucent={false}
+            />
       <View style={styles.topContainer}>
         <FlatList
           ref={flatRef}
@@ -236,7 +243,7 @@ export default function LoginScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 

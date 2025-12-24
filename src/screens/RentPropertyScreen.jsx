@@ -8,11 +8,12 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  StatusBar,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import WhiteArrowIcon from '../assets/image/onboarding/arrow.svg';
-import ArrowIcon from '../assets/image/home/actioncard/arrow.svg'; 
+import ArrowIcon from '../assets/image/home/actioncard/arrow.svg';
 import BackIcon from '../assets/image/new-property/back-icon.svg';
 
 import FlatImg from '../assets/image/rent-property/flat.png';
@@ -26,6 +27,7 @@ import OpenLandImg from '../assets/image/rent-property/open-land.png';
 import BgImg from '../assets/image/rent-property/background-img.png';
 import BottomBgImg from '../assets/image/rent-property/rentbottom-bg.png';
 import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const {width} = Dimensions.get('window');
 
@@ -53,7 +55,12 @@ export default function RentPropertyScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="#FAF8FF"
+        barStyle="dark-content"
+        translucent={false}
+      />
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -132,7 +139,7 @@ export default function RentPropertyScreen() {
           </ImageBackground>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#000',
   },
   wrapper: {
@@ -186,7 +193,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#3F2D62',
     lineHeight: 22,
     flex: 1,
@@ -253,12 +260,12 @@ const styles = StyleSheet.create({
   },
   pgTagText: {
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#3F2D62',
   },
   bottomTitle: {
     fontSize: 24,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#FFFFFF',
   },
   bottomSub: {
@@ -277,7 +284,7 @@ const styles = StyleSheet.create({
   },
   bottomBtnText: {
     color: '#FFF',
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     fontSize: 13,
     marginRight: 6,
   },

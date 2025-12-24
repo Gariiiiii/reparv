@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import BackIcon from '../assets/image/new-property/back-icon.svg';
 import {useNavigation} from '@react-navigation/native';
@@ -19,6 +20,7 @@ import {Image} from 'react-native';
 import AddressInformationForm from '../components/home-loan/AddressInfoForm';
 import UploadDocumentsForm from '../components/home-loan/UploadDocForm';
 import UploadDocForm from '../components/home-loan/UploadDocForm';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const LoanTabs = ({active, onChange}) => {
   return (
@@ -122,7 +124,12 @@ export default function HomeLoan() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="#FAF8FF"
+        barStyle="dark-content"
+        translucent={false}
+      />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon width={22} height={22} />
@@ -188,7 +195,7 @@ export default function HomeLoan() {
           </Text>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -208,7 +215,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#000',
   },
   tabContainer: {
@@ -240,7 +247,7 @@ const styles = StyleSheet.create({
   },
 
   tabText: {
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     fontSize: 16,
     color: '#000',
   },
@@ -269,7 +276,7 @@ const styles = StyleSheet.create({
   ctaText: {
     color: '#fff',
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
   },
   footerRow: {
     flexDirection: 'row',

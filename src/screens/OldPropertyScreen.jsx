@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -15,6 +16,7 @@ import OldPropertyArea from '../components/old-property/OldPropertyArea';
 import OldPriceDetails from '../components/old-property/OldPriceDetails';
 import OldContactDetails from '../components/old-property/OldContactDetails';
 import OldUploadImg from '../components/old-property/OldUploadImg';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function OldPropertyScreen() {
   const navigation = useNavigation();
@@ -55,7 +57,12 @@ export default function OldPropertyScreen() {
   
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+              backgroundColor="#FAF8FF"
+              barStyle="dark-content"
+              translucent={false}
+            />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon width={22} height={22} />
@@ -143,7 +150,7 @@ export default function OldPropertyScreen() {
           All fields marked with * are mandatory
         </Text>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

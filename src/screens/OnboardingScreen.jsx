@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
+  StatusBar,
 } from 'react-native';
 
 import On1 from '../assets/image/onboarding/On boarding screen 1.svg';
@@ -14,6 +15,7 @@ import On3 from '../assets/image/onboarding/On boarding screen 3.svg';
 import Skip from '../assets/image/onboarding/skip.svg';
 import Arrow from '../assets/image/onboarding/arrow.svg';
 import Logo from '../assets/image/common/logo.svg';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const {width, height} = Dimensions.get('window');
 
@@ -63,7 +65,12 @@ export default function OnboardingScreen({navigation}) {
   const PrevSvg = slides[prevIndex].Component;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="#FAF8FF"
+        barStyle="dark-content"
+        translucent={false}
+      />
       <View style={styles.logoContainer}>
         <Logo width={84} height={35} />
       </View>
@@ -105,14 +112,12 @@ export default function OnboardingScreen({navigation}) {
 
         <TouchableOpacity style={styles.nextBtn} onPress={handleNext}>
           <View style={styles.nextContent}>
-            <Text style={styles.nextText}>
-              Next
-            </Text>
-              <Arrow width={24} height={24} style={{marginLeft: 6}} />
+            <Text style={styles.nextText}>Next</Text>
+            <Arrow width={24} height={24} style={{marginLeft: 6}} />
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -134,8 +139,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   skipText: {
-    color: '#fff', fontSize: 16,
-    fontFamily : "SegoeUI-Bold"
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'SegoeUI-Bold',
     // fontWeight: '700'
   },
   bottomContainer: {
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 28,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     width: '80%',
     marginBottom: 20,
     lineHeight: 42,
@@ -172,5 +178,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  nextText: {color: '#fff', fontSize: 16, fontFamily : "SegoeUI-Bold"},
+  nextText: {color: '#fff', fontSize: 16, fontFamily: 'SegoeUI-Bold'},
 });

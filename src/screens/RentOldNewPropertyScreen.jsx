@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -15,6 +16,7 @@ import PropertyArea from '../components/rent-property/PropertyArea';
 import PriceDetails from '../components/rent-property/PriceDetails';
 import ContactDetails from '../components/rent-property/ContactDetails';
 import UploadImg from '../components/rent-property/UploadImg';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function RentOldNewPropertyScreen() {
   const navigation = useNavigation();
@@ -52,10 +54,14 @@ export default function RentOldNewPropertyScreen() {
       console.log('Submit pressed');
     }
   };
-  
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="#FAF8FF"
+        barStyle="dark-content"
+        translucent={false}
+      />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <BackIcon width={22} height={22} />
@@ -143,7 +149,7 @@ export default function RentOldNewPropertyScreen() {
           All fields marked with * are mandatory
         </Text>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'Segoe UI',
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#000',
   },
   scrollContent: {
@@ -197,7 +203,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
   },
   footerText: {
     textAlign: 'center',

@@ -1,16 +1,23 @@
 import React, {useCallback} from 'react';
-import {View, StyleSheet, ScrollView, BackHandler} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  BackHandler,
+  StatusBar,
+} from 'react-native';
 import HomeHeader from '../components/home/HomeHeader';
 import ActionCards from '../components/home/ActionCards';
 import RentProperty from '../components/home/RentProperty';
 import HomeLoan from '../components/home/HomeLoan';
 import {useFocusEffect} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        BackHandler.exitApp(); 
+        BackHandler.exitApp();
         return true;
       };
 
@@ -20,20 +27,24 @@ export default function HomeScreen() {
       );
 
       return () => {
-        subscription.remove(); 
+        subscription.remove();
       };
     }, []),
   );
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor="#4a2c6a"
+        barStyle="light-content"
+        translucent={false}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HomeHeader />
         <ActionCards />
         <RentProperty />
         <HomeLoan />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
