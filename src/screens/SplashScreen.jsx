@@ -1,15 +1,14 @@
 import React, {useEffect, useRef} from 'react';
-import {View, StyleSheet, Animated, Dimensions, StatusBar} from 'react-native';
+import {View, StyleSheet, Animated, Dimensions} from 'react-native';
 import Logo from '../assets/image/common/logo.svg';
 import HomeIcon from '../assets/image/common/homeIcon.svg';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const {width} = Dimensions.get('window');
 
 const SplashScreen = ({navigation}) => {
-  const bgAnim = useRef(new Animated.Value(0)).current;
-  const homeOpacity = useRef(new Animated.Value(1)).current;
-  const logoX = useRef(new Animated.Value(width)).current;
+  const bgAnim = useRef(new Animated.Value(0)).current; 
+  const homeOpacity = useRef(new Animated.Value(1)).current; 
+  const logoX = useRef(new Animated.Value(width)).current; 
   const logoOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -58,31 +57,19 @@ const SplashScreen = ({navigation}) => {
   });
 
   return (
-    <SafeAreaView style={{flex: 1}} edges={['top', 'bottom']}>
-      <StatusBar
-        backgroundColor="#076300"
-        barStyle="light-content"
-        translucent={false}
-      />
-      <Animated.View style={[styles.container, {backgroundColor: bgColor}]}>
-        <StatusBar
-          backgroundColor="#FAF8FF"
-          barStyle="dark-content"
-          translucent={false}
-        />
-        <Animated.View style={{opacity: homeOpacity, position: 'absolute'}}>
-          <HomeIcon width={120} height={120} />
-        </Animated.View>
-
-        <Animated.View
-          style={{
-            transform: [{translateX: logoX}],
-            opacity: logoOpacity,
-          }}>
-          <Logo width={300} height={130} />
-        </Animated.View>
+    <Animated.View style={[styles.container, {backgroundColor: bgColor}]}>
+      <Animated.View style={{opacity: homeOpacity, position: 'absolute'}}>
+        <HomeIcon width={120} height={120} />
       </Animated.View>
-    </SafeAreaView>
+
+      <Animated.View
+        style={{
+          transform: [{translateX: logoX}],
+          opacity: logoOpacity,
+        }}>
+        <Logo width={300} height={130} />
+      </Animated.View>
+    </Animated.View>
   );
 };
 
