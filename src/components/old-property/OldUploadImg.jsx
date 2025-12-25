@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,15 +7,18 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import UploadIcon from '../../assets/image/rent-oldnew-property/img-upload.png';
 
-export default function OldUploadImg() {
+const MAX_LENGTH = 5000;
+
+export default function OldUploadImg({images = [], onImagePicked}) {
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
 
   const handleChange = text => {
-    if (text.length > 5000) {
+    if (text.length > MAX_LENGTH) {
       setError('Property description cannot exceed 5000 characters');
     } else {
       setError('');
@@ -23,29 +26,70 @@ export default function OldUploadImg() {
     setDescription(text);
   };
 
+  /*IMAGE PICKER (FIXED) */
+  const pickImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 1,
+      },
+      response => {
+        if (response.didCancel) return;
+        if (response.errorCode) {
+          console.log('Picker Error:', response.errorMessage);
+          return;
+        }
+
+        const asset = response.assets?.[0];
+        if (!asset) return;
+
+        onImagePicked({
+          uri: asset.uri,
+          name: asset.fileName || 'property.jpg',
+          type: asset.type || 'image/jpeg',
+        });
+      },
+    );
+  };
+
+  const hasImage = images.length > 0;
+
   return (
     <View style={styles.container}>
-      {/* Title */}
       <Text style={styles.title}>Upload Property Photos</Text>
 
-      {/* Upload Box */}
       <View style={styles.uploadBox}>
-        <Image source={UploadIcon} style={styles.icon} />
+        {hasImage ? (
+          <>
+            <Image source={{uri: images[0].uri}} style={styles.previewImage} />
 
-        <Text style={styles.addText}>
-          <Text style={styles.plus}>＋ </Text>
-          Add at least 5 Photos
-        </Text>
+            <TouchableOpacity
+              style={[styles.uploadBtn, {marginTop: 12}]}
+              onPress={pickImage}
+            >
+              <Text style={styles.uploadBtnText}>Change Photo</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Image source={UploadIcon} style={styles.icon} />
 
-        <Text style={styles.subText}>Drop your Photos here</Text>
+            <Text style={styles.addText}>
+              <Text style={styles.plus}>＋ </Text>
+              Add at least 1 Photo
+            </Text>
 
-        <Text style={styles.metaText}>
-          Upto 50 Photos · Max Size 10MB · Format: png, jpg, jpeg, gif, webp
-        </Text>
+            <Text style={styles.subText}>Drop your Photos here</Text>
 
-        <TouchableOpacity activeOpacity={0.9} style={styles.uploadBtn}>
-          <Text style={styles.uploadBtnText}>Upload Photos</Text>
-        </TouchableOpacity>
+            <Text style={styles.metaText}>
+              Max Size 10MB · Format: png, jpg, jpeg, webp
+            </Text>
+
+            <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
+              <Text style={styles.uploadBtnText}>Upload Photos</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
 
       <Text style={[styles.title, {marginTop: 16}]}>
@@ -53,24 +97,32 @@ export default function OldUploadImg() {
         <Text style={styles.optional}>(Optional)</Text>
       </Text>
 
-      {/* Text Area */}
-      <View style={[styles.textAreaWrapper, error && {borderColor: '#E33629'}]}>
+      <View
+        style={[
+          styles.textAreaWrapper,
+          error && {borderColor: '#E33629'},
+        ]}
+      >
         <TextInput
           placeholder="Property Description..........."
           placeholderTextColor="#D9D9D9"
           multiline
-          maxLength={5000}
+          maxLength={MAX_LENGTH}
           style={styles.textArea}
           value={description}
           onChangeText={handleChange}
         />
 
-        <Text style={styles.counter}> {description.length}/5000</Text>
+        <Text style={styles.counter}>
+          {description.length}/{MAX_LENGTH}
+        </Text>
       </View>
+
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
@@ -79,10 +131,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#000',
     marginBottom: 12,
-    fontFamily: 'Segoe UI',
   },
   uploadBox: {
     borderWidth: 1,
@@ -93,39 +144,39 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingHorizontal: 16,
   },
-
   icon: {
     width: 42,
     height: 32,
     marginBottom: 12,
     tintColor: '#8A38F5',
   },
-
+  previewImage: {
+    width: '100%',
+    height: 180,
+    borderRadius: 8,
+    resizeMode: 'cover',
+  },
   addText: {
     fontSize: 14,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
     color: '#8A38F5',
     marginBottom: 6,
   },
-
   plus: {
     fontSize: 18,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
   },
-
   subText: {
     fontSize: 12,
     color: '#868686',
     marginBottom: 8,
   },
-
   metaText: {
     fontSize: 12,
     color: '#868686',
     textAlign: 'center',
     marginBottom: 16,
   },
-
   uploadBtn: {
     paddingHorizontal: 28,
     height: 36,
@@ -133,20 +184,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    boxShadow: '0px 4px 11px 2px #8A38F540',
+    elevation: 5,
   },
-
   uploadBtnText: {
     color: '#fff',
     fontSize: 12,
-    fontFamily : "SegoeUI-Bold",
+    fontFamily: 'SegoeUI-Bold',
   },
   optional: {
     fontSize: 14,
-    fontWeight: '400',
     color: '#868686',
   },
-
   textAreaWrapper: {
     borderWidth: 1,
     borderColor: '#D9D9D9',
@@ -155,7 +203,6 @@ const styles = StyleSheet.create({
     minHeight: 150,
     backgroundColor: '#fff',
   },
-
   textArea: {
     fontSize: 14,
     color: '#000',
@@ -171,6 +218,6 @@ const styles = StyleSheet.create({
   error: {
     color: '#E33629',
     fontSize: 12,
-    marginVertical: 6,
+    marginTop: 6,
   },
 });
