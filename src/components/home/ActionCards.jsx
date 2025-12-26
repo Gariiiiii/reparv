@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 
   /* CARD */
   card: {
-    width: (width - 18 * 2 - 12) / 2, // ✅ 2 cards per row
+    width: (width - 18 * 2 - 12) / 2, //  2 cards per row
     borderRadius: 16,
     backgroundColor: '#FFFFFF',
     marginBottom: 16,

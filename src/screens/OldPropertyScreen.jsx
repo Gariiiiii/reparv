@@ -33,7 +33,7 @@ export default function OldPropertyScreen() {
   const [ownerName, setOwnerName] = useState('');
   const [phone, setPhone] = useState('');
 
-  // ✅ ONLY ONE IMAGE STATE
+  //  ONLY ONE IMAGE STATE
   const [images, setImages] = useState([]);
 
   /* ---------------- VALIDATION ---------------- */
@@ -80,7 +80,7 @@ const handleImagePicked = image => {
       ]),
     );
 
-    // ✅ Image
+    //  Image
     formData.append('frontView', {
       uri: images[0].uri,
       name: images[0].name || 'property.jpg',
@@ -88,7 +88,7 @@ const handleImagePicked = image => {
     });
 
     const res = await fetch(
-  'https://api.reparv.in/customerapp/property/post',
+  'http://10.16.33.25:3000/customerapp/property/post',
   {
     method: 'POST',
     body: formData,
@@ -132,6 +132,10 @@ if (res.ok) {
     }
   };
 
+  const handleBackStep = () => {
+  setShowUpload(false);
+};
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FAF8FF" barStyle="dark-content" />
@@ -146,68 +150,39 @@ if (res.ok) {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {!showUpload ? (
-          <>
-            <OldPropertyType
-              value={propertyType}
-              onChange={val => {
-                setPropertyType(val);
-                setErrors(prev => ({...prev, propertyType: null}));
-              }}
-              error={errors.propertyType}
-            />
+       {showUpload ? (
+  <>
+    {/* IMAGE UPLOAD STEP */}
+    <OldUploadImg
+      images={images}
+      onImagePicked={handleImagePicked}
+    />
 
-            <OldPropertyArea
-              value={area}
-              onChange={text => {
-                setArea(text);
-                setErrors(prev => ({...prev, area: null}));
-              }}
-              error={errors.area}
-            />
+    {/* BUTTON ROW */}
+    <View style={styles.uploadButtonsRow}>
+      <TouchableOpacity
+        style={[styles.button, styles.backButton]}
+        onPress={handleBackStep}
+      >
+        <Text style={[styles.buttonText, {color: '#8A38F5'}]}>
+          Back
+        </Text>
+      </TouchableOpacity>
 
-            <OldPriceDetails
-              sellingPrice={sellingPrice}
-              onChangeSelling={text => {
-                setSellingPrice(text);
-                setErrors(prev => ({...prev, sellingPrice: null}));
-              }}
-              error={errors.sellingPrice}
-            />
+      <TouchableOpacity
+        style={[styles.button, styles.submitButton]}
+        onPress={handleButtonPress}
+      >
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
+    </View>
+  </>
+) : (
 
-            <OldContactDetails
-              ownerName={ownerName}
-              phone={phone}
-              onOwnerChange={setOwnerName}
-              onPhoneChange={setPhone}
-              errors={errors}
-            />
-
-            <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-              <View style={styles.buttonContent}>
-                <Text style={styles.buttonText}>Continue to next Step</Text>
-                <ArrowIcon width={18} height={18} />
-              </View>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            {/* IMAGE UPLOAD STEP */}
-          <OldUploadImg
-  images={images}
-  onImagePicked={handleImagePicked}
-/>
-
-
-            <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-          </>
-        )}
 
         <Text style={styles.footerText}>
           All fields marked with * are mandatory
-        </Text>
+        </Text>)}
       </ScrollView>
     </SafeAreaView>
   );
@@ -259,4 +234,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#8E8E8E',
   },
+  uploadButtonsRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignSelf: 'center',
+  width: '90%',
+  gap: 12,
+},
+
+backButton: {
+  flex: 1,
+  backgroundColor: '#FFF',
+  borderWidth: 1,
+  borderColor: '#8A38F5',
+},
+
+submitButton: {
+  flex: 1,
+  backgroundColor: '#8A38F5',
+},
+
 });
