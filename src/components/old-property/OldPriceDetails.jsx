@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
-export default function OldPriceDetails({sellingPrice, onChangeSelling, error}) {
+export default function OldPriceDetails( { sellingPrice,totalPrice,setTotalPrice, onChangeSelling, error,error2}) {
   return (
     <View style={styles.wrapper}>
       {/* Header */}
@@ -12,7 +12,7 @@ export default function OldPriceDetails({sellingPrice, onChangeSelling, error}) 
 
       {/* Selling Price */}
       <Text style={styles.label}>
-        Selling Price <Text style={styles.required}>*</Text>
+     Property Total Price <Text style={styles.required}>*</Text>
       </Text>
       <View style={styles.inputWrapper}>
         <Text style={styles.prefix}>₹</Text>
@@ -21,11 +21,12 @@ export default function OldPriceDetails({sellingPrice, onChangeSelling, error}) 
           placeholderTextColor="#9CA3AF"
           keyboardType="numeric"
           style={styles.input}
-          value={sellingPrice}
-          onChangeText={onChangeSelling}
+            value={totalPrice}
+          onChangeText={setTotalPrice}
+        
         />
       </View>
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error2 && <Text style={styles.error}>{error2}</Text>}
 
       {/* Expected Offer Price */}
       <Text style={[styles.label, {marginTop: 14}]}>Expected Offer Price</Text>
@@ -36,8 +37,11 @@ export default function OldPriceDetails({sellingPrice, onChangeSelling, error}) 
           placeholderTextColor="#868686"
           keyboardType="numeric"
           style={styles.input}
+            value={sellingPrice}
+          onChangeText={onChangeSelling}
         />
       </View>
+         {error && <Text style={styles.error}>{error}</Text>}
 
       <Text style={styles.helperText}>Price you're willing to negotiate</Text>
     </View>

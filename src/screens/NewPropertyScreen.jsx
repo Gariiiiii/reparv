@@ -70,7 +70,7 @@ export default function NewPropertyScreen() {
       {/* CARDS */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.wrapper}>
+        contentContainerStyle={[styles.wrapper, {paddingBottom: 32}]}>
         {cardData.map((item, index) => (
           <TouchableOpacity
             key={index}

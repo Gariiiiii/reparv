@@ -1,121 +1,114 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Image,
-  TextInput,
 } from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import UploadIcon from '../../assets/image/rent-oldnew-property/img-upload.png';
 
-const MAX_LENGTH = 5000;
+const IMAGE_SECTIONS = [
+  { key: 'frontView', label: 'Front View' },
+  { key: 'sideView', label: 'Side View' },
+  { key: 'hallView', label: 'Hall' },
+  { key: 'kitchenView', label: 'Kitchen' },
+  { key: 'bedroomView', label: 'Bedroom' },
+  { key: 'bathroomView', label: 'Bathroom' },
+];
 
-export default function OldUploadImg({images = [], onImagePicked}) {
-  const [description, setDescription] = useState('');
+export default function OldUploadImg({ imageFiles, setImageFiles }) {
   const [error, setError] = useState('');
+  const [selectedSection, setSelectedSection] = useState(IMAGE_SECTIONS[0].key);
 
-  const handleChange = text => {
-    if (text.length > MAX_LENGTH) {
-      setError('Property description cannot exceed 5000 characters');
-    } else {
-      setError('');
-    }
-    setDescription(text);
-  };
-
-  /*IMAGE PICKER (FIXED) */
   const pickImage = () => {
     launchImageLibrary(
       {
         mediaType: 'photo',
-        selectionLimit: 1,
+        selectionLimit: 1, // only 1 image per category
       },
       response => {
-        if (response.didCancel) return;
-        if (response.errorCode) {
-          console.log('Picker Error:', response.errorMessage);
-          return;
-        }
+        if (response.didCancel || response.errorCode) return;
 
-        const asset = response.assets?.[0];
-        if (!asset) return;
+        const selected =
+          response.assets?.map(asset => ({
+            uri: asset.uri,
+            name: asset.fileName || `img_${Date.now()}.jpg`,
+            type: asset.type || 'image/jpeg',
+            section: selectedSection,
+          })) || [];
 
-        onImagePicked({
-          uri: asset.uri,
-          name: asset.fileName || 'property.jpg',
-          type: asset.type || 'image/jpeg',
-        });
+        // Replace the image for this section
+        setImageFiles(prev => ({
+          ...prev,
+          [selectedSection]: selected,
+        }));
       },
     );
   };
 
-  const hasImage = images.length > 0;
+  useEffect(() => {
+    // check if all sections have 1 image
+    const uploadedCount = IMAGE_SECTIONS.filter(
+      s => imageFiles[s.key]?.length > 0
+    ).length;
+
+    if (uploadedCount < IMAGE_SECTIONS.length) {
+      setError(`Please upload 1 image for each section (${uploadedCount}/${IMAGE_SECTIONS.length})`);
+    } else {
+      setError('');
+    }
+  }, [imageFiles]);
+
+  const currentImage = imageFiles[selectedSection]?.[0];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Upload Property Photos</Text>
+      <Text style={styles.title}>
+        Upload Property Photos <Text style={styles.required}>*</Text>
+      </Text>
 
-      <View style={styles.uploadBox}>
-        {hasImage ? (
-          <>
-            <Image source={{uri: images[0].uri}} style={styles.previewImage} />
-
-            <TouchableOpacity
-              style={[styles.uploadBtn, {marginTop: 12}]}
-              onPress={pickImage}
+      {/* SECTION SELECTOR */}
+      <View style={styles.sectionRow}>
+        {IMAGE_SECTIONS.map(sec => (
+          <TouchableOpacity
+            key={sec.key}
+            style={[
+              styles.sectionBtn,
+              selectedSection === sec.key && styles.activeSection,
+            ]}
+            onPress={() => setSelectedSection(sec.key)}
+          >
+            <Text
+              style={[
+                styles.sectionText,
+                selectedSection === sec.key && styles.activeText,
+              ]}
             >
-              <Text style={styles.uploadBtnText}>Change Photo</Text>
-            </TouchableOpacity>
-          </>
+              {sec.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* UPLOAD BOX */}
+      <View style={styles.uploadBox}>
+        {currentImage ? (
+          <Image source={{ uri: currentImage.uri }} style={styles.previewImage} />
         ) : (
           <>
             <Image source={UploadIcon} style={styles.icon} />
-
-            <Text style={styles.addText}>
-              <Text style={styles.plus}>＋ </Text>
-              Add at least 1 Photo
-            </Text>
-
-            <Text style={styles.subText}>Drop your Photos here</Text>
-
-            <Text style={styles.metaText}>
-              Max Size 10MB · Format: png, jpg, jpeg, webp
-            </Text>
-
-            <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
-              <Text style={styles.uploadBtnText}>Upload Photos</Text>
-            </TouchableOpacity>
+            <Text style={styles.helperText}>Upload image for {IMAGE_SECTIONS.find(s => s.key === selectedSection)?.label}</Text>
           </>
         )}
-      </View>
 
-      <Text style={[styles.title, {marginTop: 16}]}>
-        Add Additional information{' '}
-        <Text style={styles.optional}>(Optional)</Text>
-      </Text>
-
-      <View
-        style={[
-          styles.textAreaWrapper,
-          error && {borderColor: '#E33629'},
-        ]}
-      >
-        <TextInput
-          placeholder="Property Description..........."
-          placeholderTextColor="#D9D9D9"
-          multiline
-          maxLength={MAX_LENGTH}
-          style={styles.textArea}
-          value={description}
-          onChangeText={handleChange}
-        />
-
-        <Text style={styles.counter}>
-          {description.length}/{MAX_LENGTH}
-        </Text>
+        <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
+          <Text style={styles.uploadBtnText}>
+            {currentImage ? 'Replace Photo' : 'Upload Photo'}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -126,98 +119,84 @@ export default function OldUploadImg({images = [], onImagePicked}) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
-    paddingVertical: 16,
     backgroundColor: '#fff',
   },
   title: {
     fontSize: 16,
     fontFamily: 'SegoeUI-Bold',
-    color: '#000',
     marginBottom: 12,
+  },
+  required: {
+    color: '#E33629',
+  },
+  sectionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
+  },
+  sectionBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
+  },
+  activeSection: {
+    backgroundColor: '#8A38F5',
+    borderColor: '#8A38F5',
+  },
+  sectionText: {
+    fontSize: 12,
+    color: '#555',
+  },
+  activeText: {
+    color: '#fff',
+    fontFamily: 'SegoeUI-Bold',
   },
   uploadBox: {
     borderWidth: 1,
     borderColor: '#868686',
     borderRadius: 8,
     backgroundColor: '#FAF8FF',
+    padding: 16,
     alignItems: 'center',
-    paddingVertical: 24,
-    paddingHorizontal: 16,
   },
   icon: {
     width: 42,
     height: 32,
-    marginBottom: 12,
     tintColor: '#8A38F5',
-  },
-  previewImage: {
-    width: '100%',
-    height: 180,
-    borderRadius: 8,
-    resizeMode: 'cover',
-  },
-  addText: {
-    fontSize: 14,
-    fontFamily: 'SegoeUI-Bold',
-    color: '#8A38F5',
-    marginBottom: 6,
-  },
-  plus: {
-    fontSize: 18,
-    fontFamily: 'SegoeUI-Bold',
-  },
-  subText: {
-    fontSize: 12,
-    color: '#868686',
     marginBottom: 8,
   },
-  metaText: {
+  helperText: {
     fontSize: 12,
     color: '#868686',
-    textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 10,
+  },
+  previewImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 6,
+    marginBottom: 12,
   },
   uploadBtn: {
+    marginTop: 12,
     paddingHorizontal: 28,
     height: 36,
     backgroundColor: '#8A38F5',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5,
   },
   uploadBtnText: {
     color: '#fff',
     fontSize: 12,
     fontFamily: 'SegoeUI-Bold',
   },
-  optional: {
-    fontSize: 14,
-    color: '#868686',
-  },
-  textAreaWrapper: {
-    borderWidth: 1,
-    borderColor: '#D9D9D9',
-    borderRadius: 8,
-    padding: 12,
-    minHeight: 150,
-    backgroundColor: '#fff',
-  },
-  textArea: {
-    fontSize: 14,
-    color: '#000',
-    textAlignVertical: 'top',
-    flex: 1,
-  },
-  counter: {
-    fontSize: 12,
-    color: '#868686',
-    textAlign: 'right',
-    marginTop: 6,
-  },
   error: {
     color: '#E33629',
     fontSize: 12,
-    marginTop: 6,
+    marginTop: 8,
+    textAlign: 'center',
   },
 });

@@ -106,7 +106,7 @@ export default function LoginScreen() {
               <View style={styles.slide}>
                 <Bg
                   width={width}
-                  height={height * 0.4}
+                  height={height * 0.42}
                   preserveAspectRatio="xMidYMid slice"
                 />
                 <View style={styles.overlayText}>
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   bottomCardWrapper: {
-    height: height * 0.55,
+    height: height * 0.58,
   },
   bottomCardContent: {flex: 1, paddingTop: 20, alignItems: 'center', gap: 4},
   mainTitle: {

@@ -7,6 +7,8 @@ import {
   ScrollView,
   StatusBar,
   ToastAndroid,
+  TextInput,
+  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -20,21 +22,31 @@ import OldPropertyArea from '../components/old-property/OldPropertyArea';
 import OldPriceDetails from '../components/old-property/OldPriceDetails';
 import OldContactDetails from '../components/old-property/OldContactDetails';
 import OldUploadImg from '../components/old-property/OldUploadImg';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function OldPropertyScreen() {
   const navigation = useNavigation();
 
   const [showUpload, setShowUpload] = useState(false);
   const [errors, setErrors] = useState({});
-
+  const [propertyName, setPropertyName] = useState('');
   const [propertyType, setPropertyType] = useState(null);
   const [area, setArea] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
   const [ownerName, setOwnerName] = useState('');
   const [phone, setPhone] = useState('');
-
-  //  ONLY ONE IMAGE STATE
-  const [images, setImages] = useState([]);
+  const [totalPrice, setTotalPrice] = useState('');
+  const [imageFiles, setImageFiles] = useState({
+    frontView: [],
+    sideView: [],
+    kitchenView: [],
+    hallView: [],
+    bedroomView: [],
+    bathroomView: [],
+    balconyView: [],
+    nearestLandmark: [],
+    developedAmenities: [],
+  });
 
   /* ---------------- VALIDATION ---------------- */
   const validateStepOne = () => {
@@ -42,88 +54,86 @@ export default function OldPropertyScreen() {
 
     if (!propertyType) newErrors.propertyType = 'Please select property type';
     if (!area) newErrors.area = 'Property area is required';
-    if (!sellingPrice) newErrors.sellingPrice = 'Selling price is required';
+    if (!sellingPrice) newErrors.sellingPrice = 'Offer price is required';
+    if (!totalPrice) newErrors.totalPrice = 'Total price is required ';
     if (!ownerName) newErrors.ownerName = 'Owner name is required';
     if (!phone || phone.length !== 10)
       newErrors.phone = 'Valid phone number required';
-
+    if (!propertyName) newErrors.propertyName = 'Property name is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-
-
-// IMAGE FROM CHILD
-const handleImagePicked = image => {
-  setImages([image]); // only one image
-};
-
-
+  const getTotalImageCount = () => {
+    return Object.values(imageFiles).reduce((sum, arr) => sum + arr.length, 0);
+  };
 
   const handleSubmit = async () => {
-  if (images.length === 0) {
-    ToastAndroid.show('Please upload one image', ToastAndroid.SHORT);
-    return;
-  }
+    if (getTotalImageCount() < 5) {
+      ToastAndroid.show('Please upload at least 5 images', ToastAndroid.SHORT);
+      return;
+    }
 
-  try {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append('property_type', propertyType);
-    formData.append('price', String(sellingPrice));
-    formData.append('contact', String(phone));
+      formData.append('property_type', propertyType);
+      formData.append('property_name', String(propertyName));
+      formData.append('price', totalPrice);
+      formData.append('ofprice', sellingPrice);
+      formData.append('contact', String(phone));
 
-    formData.append(
-      'areas',
-      JSON.stringify([
-        { label: 'Built-up Area', value: area, unit: 'sq.ft.' },
-      ]),
-    );
+      formData.append(
+        'areas',
+        JSON.stringify([{label: 'Built-up Area', value: area, unit: 'sq.ft.'}]),
+      );
 
-    //  Image
-    formData.append('frontView', {
-      uri: images[0].uri,
-      name: images[0].name || 'property.jpg',
-      type: images[0].type || 'image/jpeg',
-    });
+      Object.keys(imageFiles).forEach(key => {
+        const filesArray = imageFiles[key];
+        if (filesArray && filesArray.length > 0) {
+          filesArray.forEach((file, index) => {
+            formData.append(key, {
+              uri: file.uri,
+              type: file.type || 'image/jpeg',
+              name: file.name || `${key}_${index}.jpg`,
+            });
+          });
+        }
+      });
 
-    const res = await fetch(
-  'http://10.16.33.25:3000/customerapp/property/post',
-  {
-    method: 'POST',
-    body: formData,
-  }
-);
+      const res = await fetch(
+        'https://api.reparv.in/customerapp/property/post',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
-// 🔥 READ AS TEXT FIRST
-const text = await res.text();
-console.log('RAW RESPONSE:', text);
+      const text = await res.text();
+      console.log('RAW RESPONSE:', text);
 
-// Try JSON only if valid
-let data;
-try {
-  data = JSON.parse(text);
-} catch (e) {
-  console.log('Response is not JSON');
-}
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.log('Response is not JSON');
+      }
 
-if (res.ok) {
-  ToastAndroid.show('Property added successfully', ToastAndroid.SHORT);
-  navigation.goBack();
-} else {
-  ToastAndroid.show(
-    data?.message || 'Property submission failed',
-    ToastAndroid.LONG,
-  );
-}
-  } catch (err) {
-    console.log('UPLOAD ERROR:', err);
-    ToastAndroid.show('Network error', ToastAndroid.LONG);
-  }
-};
+      if (res.ok) {
+        ToastAndroid.show('Property added successfully', ToastAndroid.SHORT);
+        navigation.goBack();
+      } else {
+        ToastAndroid.show(
+          data?.message || 'Property submission failed',
+          ToastAndroid.LONG,
+        );
+      }
+    } catch (err) {
+      console.log('UPLOAD ERROR:', err);
+      ToastAndroid.show('Network error', ToastAndroid.LONG);
+    }
+  };
 
-
-  /* ---------------- BUTTON HANDLER ---------------- */
   const handleButtonPress = () => {
     if (!showUpload) {
       if (validateStepOne()) setShowUpload(true);
@@ -132,16 +142,22 @@ if (res.ok) {
     }
   };
 
-  const handleBackStep = () => {
-  setShowUpload(false);
-};
+  const handleBackPress = () => {
+    if (showUpload) {
+      // If on upload step, go back to details step
+      setShowUpload(false);
+    } else {
+      navigation.goBack();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FAF8FF" barStyle="dark-content" />
 
+      {/* HEADER */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={handleBackPress}>
           <BackIcon width={22} height={22} />
         </TouchableOpacity>
 
@@ -150,39 +166,130 @@ if (res.ok) {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-       {showUpload ? (
-  <>
-    {/* IMAGE UPLOAD STEP */}
-    <OldUploadImg
-      images={images}
-      onImagePicked={handleImagePicked}
-    />
+        {!showUpload ? (
+          <>
+            <OldPropertyType
+              value={propertyType}
+              onChange={val => {
+                setPropertyType(val);
+                setErrors(prev => ({...prev, propertyType: null}));
+              }}
+              error={errors.propertyType}
+            />
 
-    {/* BUTTON ROW */}
-    <View style={styles.uploadButtonsRow}>
-      <TouchableOpacity
-        style={[styles.button, styles.backButton]}
-        onPress={handleBackStep}
-      >
-        <Text style={[styles.buttonText, {color: '#8A38F5'}]}>
-          Back
-        </Text>
-      </TouchableOpacity>
+            <OldPropertyArea
+              value={area}
+              onChange={text => {
+                setArea(text);
+                setErrors(prev => ({...prev, area: null}));
+              }}
+              error={errors.area}
+            />
 
-      <TouchableOpacity
-        style={[styles.button, styles.submitButton]}
-        onPress={handleButtonPress}
-      >
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
-  </>
-) : (
+            {/*Property Name */}
+            <View
+              style={{
+                backgroundColor: 'white',
+                paddingHorizontal: 24,
+                paddingVertical: 16,
+              }}>
+              <View style={styles.headerRow}>
+                <Text style={styles.heading}>Property Name</Text>
+              </View>
 
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  placeholder="Enter Property Name"
+                  placeholderTextColor="#9CA3AF"
+                  style={styles.input}
+                  value={propertyName}
+                  onChangeText={v => {
+                    setPropertyName(v);
+                  }}
+                />
+              </View>
+              {errors.propertyName && (
+                <Text style={styles.error}>{errors.propertyName}</Text>
+              )}
+            </View>
+
+            <OldPriceDetails
+              sellingPrice={sellingPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              onChangeSelling={text => {
+                setSellingPrice(text);
+                setErrors(prev => ({
+                  ...prev,
+                  totalPrice: null,
+                  sellingPrice: null,
+                }));
+              }}
+              error={errors.sellingPrice}
+              error2={errors.totalPrice}
+            />
+
+            <OldContactDetails
+              ownerName={ownerName}
+              phone={phone}
+              onOwnerChange={setOwnerName}
+              onPhoneChange={setPhone}
+              errors={errors}
+            />
+
+            <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
+              <View style={styles.buttonContent}>
+                <Text style={styles.buttonText}>Continue to next Step</Text>
+                <ArrowIcon width={18} height={18} />
+              </View>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            {/* IMAGE UPLOAD STEP */}
+            <OldUploadImg
+              imageFiles={imageFiles}
+              setImageFiles={setImageFiles}
+            />
+
+            <View style={styles.nbuttonRow}>
+              {/* Cancel Button */}
+              <Pressable
+                style={({pressed}) => [
+                  styles.nbutton,
+                  pressed && styles.pressed,
+                ]}>
+                <LinearGradient
+                  colors={['#A855F7', '#8B5CF6']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={styles.gradientButton}>
+                  <Text style={styles.nbuttonText}>Cancel</Text>
+                </LinearGradient>
+              </Pressable>
+
+              {/* Submit Button */}
+              <Pressable
+                style={({pressed}) => [
+                  styles.nbutton,
+                  pressed && styles.pressed,
+                ]}
+                onPress={handleButtonPress}>
+                <LinearGradient
+                  colors={['#34D399', '#10B981']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={styles.gradientButton}>
+                  <Text style={styles.nbuttonText}>Submit</Text>
+                </LinearGradient>
+              </Pressable>
+            </View>
+          </>
+        )}
 
         <Text style={styles.footerText}>
           All fields marked with * are mandatory
-        </Text>)}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -234,24 +341,68 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#8E8E8E',
   },
-  uploadButtonsRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignSelf: 'center',
-  width: '90%',
-  gap: 12,
-},
-
-backButton: {
-  flex: 1,
-  backgroundColor: '#FFF',
-  borderWidth: 1,
-  borderColor: '#8A38F5',
-},
-
-submitButton: {
-  flex: 1,
-  backgroundColor: '#8A38F5',
-},
-
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
+  },
+  heading: {
+    fontSize: 16,
+    fontFamily : "SegoeUI-Bold",
+    color: '#000',
+    fontFamily: 'Segoe UI',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  required: {
+    color: '#E33629',
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#D9D9D9',
+    borderRadius: 8,
+    height: 48,
+    paddingHorizontal: 12,
+  },
+  error: {
+    color: '#E33629',
+    fontSize: 12,
+    marginVertical: 6,
+  },
+  nbuttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    gap: 12,
+  },
+  nbutton: {
+    flex: 1,
+    height: 50,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  gradientButton: {
+    flex: 1,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nbuttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'SegoeUI-Bold',
+  },
+  pressed: {
+    transform: [{scale: 0.95}],
+    opacity: 0.85,
+  },
 });
